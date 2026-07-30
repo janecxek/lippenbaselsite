@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="de" data-lang="de" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lippenbasel · Ästhetische Medizin Basel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root, html.dark{
+    --bg:#0e0b09;--bg2:#161110;--panel:#1e1714;--text:#f7f2ea;--muted:#a99f93;--muted2:#6f665d;
+    --line:#2c2420;--gold:#c6a15b;--gold2:#e6cf9f;--orb1:.5;--orb2:.28;--imgfx:.9;
+  }
+  html.light{
+    --bg:#faf6ef;--bg2:#f2ebdf;--panel:#ffffff;--text:#241d17;--muted:#726a5f;--muted2:#a89e8f;
+    --line:#e8ddcc;--gold:#a67c36;--gold2:#c6a15b;--orb1:.35;--orb2:.22;--imgfx:.72;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Jost',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;transition:background .4s,color .4s}
+  h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.1}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 26px}
+  .gold{color:var(--gold)}
+  /* language visibility */
+  html[data-lang="de"] .en{display:none}
+  html[data-lang="en"] .de{display:none}
+
+  .btn{display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a1410;padding:15px 30px;border-radius:40px;font-weight:600;font-size:13.5px;letter-spacing:1.2px;text-transform:uppercase;transition:transform .25s,box-shadow .25s;box-shadow:0 12px 30px -12px rgba(198,161,91,.6);cursor:pointer;border:0}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 18px 42px -12px rgba(198,161,91,.75)}
+  .btn.ghost{background:transparent;color:var(--gold);border:1px solid var(--gold);box-shadow:none}
+  .btn.ghost:hover{background:rgba(198,161,91,.1)}
+  .eyebrow{font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:16px}
+
+  /* top bar */
+  .topbar{background:var(--bg2);border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+  .topbar .wrap{display:flex;justify-content:center;gap:24px;padding:9px 26px;text-align:center;flex-wrap:wrap}
+  .topbar .dot{color:var(--gold)}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;padding:14px 26px;max-width:1180px;margin:0 auto}
+  .logo{display:flex;align-items:center;gap:12px}
+  .logo .mono{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:19px;letter-spacing:1px;color:var(--gold);background:radial-gradient(circle at 30% 25%,rgba(198,161,91,.22),transparent 70%)}
+  .logo .lt{font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:5px;text-transform:uppercase;color:var(--text)}
+  .logo .lt small{display:block;font-family:'Jost';font-size:8px;letter-spacing:4px;color:var(--gold);margin-top:1px}
+  .navlinks{display:flex;align-items:center;gap:26px}
+  .navlinks a.link{font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);transition:color .2s}
+  .navlinks a.link:hover{color:var(--gold)}
+  .ctrls{display:flex;align-items:center;gap:10px}
+  .toggle{display:flex;border:1px solid var(--line);border-radius:30px;overflow:hidden}
+  .toggle button{background:none;border:0;color:var(--muted);font-family:'Jost';font-size:11px;letter-spacing:1px;padding:6px 11px;cursor:pointer;transition:.2s;text-transform:uppercase}
+  .toggle button.on{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a1410;font-weight:600}
+  .themebtn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--gold);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:.2s}
+  .themebtn:hover{border-color:var(--gold)}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:0;padding:6px}
+  .burger span{width:26px;height:2px;background:var(--gold);transition:.3s}
+  .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden;padding:96px 26px 96px}
+  .hero-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+  .orb{position:absolute;border-radius:50%;filter:blur(72px);pointer-events:none}
+  .orb.a{width:440px;height:440px;top:-130px;right:-90px;background:radial-gradient(circle,rgba(198,161,91,.55),transparent 70%);opacity:var(--orb1)}
+  .orb.b{width:400px;height:400px;bottom:-160px;left:-110px;background:radial-gradient(circle,rgba(230,207,159,.4),transparent 70%);opacity:var(--orb2)}
+  .hero h1{font-size:clamp(40px,6.4vw,74px);color:var(--text);margin:8px 0 20px}
+  .hero h1 em{font-style:italic;color:var(--gold)}
+  .hero p.sub{max-width:520px;color:var(--muted);font-size:17.5px;margin-bottom:32px}
+  .hero .cta{display:flex;gap:14px;flex-wrap:wrap}
+  .hero .rating{margin-top:34px;color:var(--muted);font-size:13px;letter-spacing:.5px}
+  .hero .rating b{color:var(--gold);letter-spacing:2px}
+  .hero-art{position:relative;aspect-ratio:4/4.4;border-radius:20px;border:1px solid var(--line);background:radial-gradient(circle at 65% 30%,rgba(198,161,91,.25),transparent 55%),linear-gradient(160deg,var(--panel),var(--bg2));display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 40px 80px -50px rgba(0,0,0,.7)}
+  .hero-art svg{width:78%;height:auto;opacity:.92}
+  .hero-art .tagpill{position:absolute;bottom:22px;left:22px;background:color-mix(in srgb,var(--bg) 70%,transparent);border:1px solid var(--line);backdrop-filter:blur(8px);padding:10px 16px;border-radius:30px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+
+  /* trust */
+  .trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2)}
+  .trust .wrap{display:flex;justify-content:space-around;flex-wrap:wrap;gap:22px;padding:26px}
+  .ti{text-align:center;flex:1;min-width:130px}
+  .ti .n{font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--gold);font-weight:600}
+  .ti .l{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px}
+
+  section.block{padding:90px 0}
+  .sec-head{text-align:center;max-width:640px;margin:0 auto 54px}
+  .sec-head h2{font-size:clamp(32px,5vw,50px);color:var(--text)}
+  .sec-head h2 em{font-style:italic;color:var(--gold)}
+  .sec-head p{color:var(--muted);margin-top:14px;font-size:16px}
+  .alt{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+
+  /* services */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .card{background:linear-gradient(170deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:16px;padding:32px 26px;transition:transform .3s,border-color .3s}
+  .card:hover{transform:translateY(-6px);border-color:var(--gold)}
+  .card .ic{width:50px;height:50px;border-radius:50%;background:radial-gradient(circle at 30% 25%,rgba(198,161,91,.28),rgba(198,161,91,.05));border:1px solid rgba(198,161,91,.4);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+  .card .ic svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.5}
+  .card h3{font-size:24px;color:var(--text);margin-bottom:8px}
+  .card p{color:var(--muted);font-size:14px}
+  .card .price{margin-top:15px;font-size:12.5px;letter-spacing:1px;color:var(--gold);text-transform:uppercase}
+
+  /* why us */
+  .why{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .why .w{text-align:center;padding:10px}
+  .why .w .ic{width:58px;height:58px;margin:0 auto 16px;border-radius:50%;border:1px solid rgba(198,161,91,.4);display:flex;align-items:center;justify-content:center}
+  .why .w .ic svg{width:28px;height:28px;stroke:var(--gold);fill:none;stroke-width:1.4}
+  .why .w h3{font-size:21px;color:var(--text);margin-bottom:7px}
+  .why .w p{color:var(--muted);font-size:14px}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:34px}
+  .step{text-align:center}
+  .step .no{font-family:'Cormorant Garamond',serif;font-size:46px;color:var(--gold);font-style:italic;line-height:1}
+  .step h3{font-size:22px;color:var(--text);margin:12px 0 8px}
+  .step p{color:var(--muted);font-size:14px}
+
+  /* signature feature */
+  .feature{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+  .feature .art{aspect-ratio:5/4;border-radius:18px;border:1px solid var(--line);background:radial-gradient(circle at 35% 35%,rgba(198,161,91,.28),transparent 55%),linear-gradient(150deg,var(--panel),var(--bg2));display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .feature .art svg{width:62%;opacity:.9}
+  .feature .txt .eyebrow{margin-bottom:12px}
+  .feature .txt h2{font-size:clamp(28px,4vw,42px);color:var(--text);margin-bottom:16px}
+  .feature .txt h2 em{font-style:italic;color:var(--gold)}
+  .feature .txt p{color:var(--muted);margin-bottom:14px;font-size:15.5px}
+  .feature ul{list-style:none;margin:18px 0 24px}
+  .feature ul li{display:flex;gap:12px;align-items:flex-start;color:var(--text);font-size:15px;margin-bottom:11px}
+  .feature ul li::before{content:'';flex:none;width:22px;height:22px;border-radius:50%;margin-top:1px;background:radial-gradient(circle,var(--gold),var(--gold2));display:inline-block;box-shadow:inset 0 0 0 6px var(--bg2)}
+
+  /* gallery */
+  .gal{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .ba{position:relative;aspect-ratio:4/5;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:linear-gradient(150deg,color-mix(in srgb,var(--gold) 14%,var(--panel)),var(--bg2))}
+  .ba svg{position:absolute;width:52%;top:50%;left:50%;transform:translate(-50%,-58%);opacity:.5}
+  .ba::after{content:attr(data-l);position:absolute;top:12px;left:12px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);background:color-mix(in srgb,var(--bg) 68%,transparent);padding:5px 11px;border-radius:20px;border:1px solid rgba(198,161,91,.35)}
+  .ba .cap{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--muted2)}
+  .ba .split{position:absolute;top:8%;bottom:8%;left:50%;width:1px;background:rgba(198,161,91,.35)}
+
+  /* price list */
+  .pricecols{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+  .plist{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:34px 32px}
+  .plist h3{font-size:24px;color:var(--gold);margin-bottom:18px;font-style:italic}
+  .prow{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px dashed var(--line)}
+  .prow:last-child{border-bottom:0}
+  .prow .nm{color:var(--text);font-size:15px}
+  .prow .nm small{display:block;color:var(--muted);font-size:12.5px;letter-spacing:.3px;text-transform:none}
+  .prow .pr{color:var(--gold);font-weight:500;white-space:nowrap;font-size:15px}
+  .pnote{text-align:center;color:var(--muted2);font-size:12.5px;margin-top:22px;font-style:italic;font-family:'Cormorant Garamond',serif}
+
+  /* about */
+  .about{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+  .about .txt h2{font-size:clamp(30px,4.5vw,46px);color:var(--text);margin-bottom:18px}
+  .about .txt h2 em{font-style:italic;color:var(--gold)}
+  .about .txt p{color:var(--muted);margin-bottom:16px;font-size:16px}
+  .about .txt .sig{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:26px;color:var(--gold);margin-top:6px}
+  .about .visual{aspect-ratio:1;border-radius:18px;border:1px solid var(--line);background:radial-gradient(circle at 35% 30%,rgba(198,161,91,.22),transparent 60%),linear-gradient(160deg,var(--panel),var(--bg2));display:flex;align-items:center;justify-content:center;position:relative}
+  .about .visual .mono2{width:120px;height:120px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:52px;color:var(--gold);font-weight:700}
+  .about .visual .cap{position:absolute;bottom:18px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted2)}
+
+  /* academy */
+  .academy{background:linear-gradient(160deg,color-mix(in srgb,var(--gold) 8%,var(--panel)),var(--bg2));border:1px solid var(--line);border-radius:20px;padding:56px 44px;text-align:center;position:relative;overflow:hidden}
+  .academy h2{font-size:clamp(30px,4.5vw,46px);color:var(--text);position:relative}
+  .academy h2 em{font-style:italic;color:var(--gold)}
+  .academy p{color:var(--muted);max-width:560px;margin:14px auto 26px;position:relative;font-size:16px}
+  .academy .tags{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:30px;position:relative}
+  .academy .tags span{border:1px solid rgba(198,161,91,.4);color:var(--gold);padding:8px 18px;border-radius:30px;font-size:12px;letter-spacing:1px}
+
+  /* reviews */
+  .revs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .rev{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:30px 26px}
+  .rev .stars{color:var(--gold);letter-spacing:3px;font-size:15px;margin-bottom:12px}
+  .rev p{color:var(--text);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:19px;line-height:1.4;margin-bottom:16px}
+  .rev .who{font-size:12.5px;letter-spacing:1px;color:var(--muted);text-transform:uppercase}
+
+  /* faq */
+  .faq{max-width:820px;margin:0 auto}
+  .qa{border-bottom:1px solid var(--line)}
+  .qa button{width:100%;text-align:left;background:none;border:0;color:var(--text);font-family:'Cormorant Garamond',serif;font-size:22px;padding:23px 40px 23px 0;cursor:pointer;position:relative}
+  .qa button::after{content:'+';position:absolute;right:6px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:26px;font-family:'Jost';transition:transform .3s}
+  .qa.open button::after{transform:translateY(-50%) rotate(45deg)}
+  .qa .a{max-height:0;overflow:hidden;transition:max-height .35s ease;color:var(--muted);font-size:15px}
+  .qa.open .a{max-height:240px}
+  .qa .a p{padding:0 0 23px}
+
+  /* locations */
+  .locs{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .loc{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:32px}
+  .loc .tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+  .loc h3{font-size:25px;color:var(--text);margin-bottom:10px}
+  .loc p{color:var(--muted);font-size:15px;margin-bottom:6px}
+  .loc a{color:var(--gold);font-size:14px}
+
+  /* final */
+  .final{text-align:center;padding:96px 26px;position:relative;overflow:hidden;background:var(--bg2);border-top:1px solid var(--line)}
+  .final h2{font-size:clamp(34px,5.5vw,58px);color:var(--text);position:relative}
+  .final h2 em{font-style:italic;color:var(--gold)}
+  .final p{color:var(--muted);max-width:520px;margin:16px auto 32px;position:relative;font-size:17px}
+
+  /* footer */
+  footer{background:var(--bg);border-top:1px solid var(--line);padding:54px 26px 30px}
+  .foot{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px}
+  footer .logo .lt{font-size:20px}
+  footer p.desc{color:var(--muted);font-size:14px;margin-top:16px;max-width:300px}
+  footer h4{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+  footer ul{list-style:none}
+  footer ul li{margin-bottom:9px}
+  footer ul li a{color:var(--muted);font-size:14px}
+  footer ul li a:hover{color:var(--gold)}
+  .copy{max-width:1180px;margin:40px auto 0;padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:var(--muted2);font-size:12px;letter-spacing:1px}
+
+  .mbar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--bg) 95%,transparent);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:11px 16px;gap:10px}
+  .mbar a{flex:1;text-align:center;padding:13px;border-radius:40px;font-size:12.5px;letter-spacing:1px;text-transform:uppercase;font-weight:600}
+  .mbar .call{border:1px solid var(--gold);color:var(--gold)}
+  .mbar .book{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a1410}
+
+  .apercu{position:fixed;top:50%;right:-1px;transform:translateY(-50%) rotate(180deg);writing-mode:vertical-rl;z-index:70;background:linear-gradient(var(--gold),var(--gold2));color:#1a1410;font-size:10px;letter-spacing:3px;text-transform:uppercase;font-weight:600;padding:14px 7px;border-radius:8px 0 0 8px}
+
+  @media(max-width:920px){
+    .hero-grid{grid-template-columns:1fr;gap:34px}.hero-art{max-width:420px;order:-1}
+    .cards,.steps,.revs{grid-template-columns:1fr 1fr}
+    .why{grid-template-columns:1fr 1fr}
+    .feature,.about{grid-template-columns:1fr;gap:32px}
+    .pricecols{grid-template-columns:1fr}
+    .foot{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:680px){
+    .navlinks{position:fixed;inset:0;width:100vw;height:100vh;flex-direction:column;justify-content:center;gap:22px;background:color-mix(in srgb,var(--bg) 98%,transparent);backdrop-filter:blur(20px);opacity:0;visibility:hidden;transition:.35s;z-index:55;padding:40px}
+    .navlinks.open{opacity:1;visibility:visible}
+    .navlinks a.link{font-size:22px;font-family:'Cormorant Garamond',serif;color:var(--text)}
+    .burger{display:flex;z-index:56}
+    .cards,.steps,.revs,.why,.locs{grid-template-columns:1fr}
+    .foot{grid-template-columns:1fr}
+    section.block{padding:60px 0}
+    .hero{padding:56px 22px 76px}
+    .mbar{display:flex}body{padding-bottom:64px}.apercu{display:none}
+    .academy{padding:44px 24px}
+  }
+</style>
+</head>
+<body>
+
+<div class="apercu"><span class="de">Vorschau · Beispielentwurf</span><span class="en">Preview · Sample Design</span></div>
+
+<div class="topbar"><div class="wrap">
+  <span>🇨🇭 <span class="de">Schweizer Qualität</span><span class="en">Swiss Quality</span></span><span class="dot">·</span>
+  <span><span class="de">Ästhetische Medizin</span><span class="en">Aesthetic Medicine</span></span><span class="dot">·</span>
+  <span><span class="de">In Zusammenarbeit mit Klinik Piano</span><span class="en">In cooperation with Klinik Piano</span></span>
+</div></div>
+
+<nav>
+  <div class="nav-in">
+    <a href="#top" class="logo"><span class="mono">LB</span><span class="lt">Lippenbasel<small><span class="de">Ästhetische Medizin</span><span class="en">Aesthetic Medicine</span></small></span></a>
+    <div class="navlinks" id="menu">
+      <a href="#behandlungen" class="link" onclick="closeMenu()"><span class="de">Behandlungen</span><span class="en">Treatments</span></a>
+      <a href="#preise" class="link" onclick="closeMenu()"><span class="de">Preise</span><span class="en">Prices</span></a>
+      <a href="#resultate" class="link" onclick="closeMenu()"><span class="de">Resultate</span><span class="en">Results</span></a>
+      <a href="#schulung" class="link" onclick="closeMenu()"><span class="de">Schulung</span><span class="en">Academy</span></a>
+      <a href="#kontakt" class="link" onclick="closeMenu()"><span class="de">Kontakt</span><span class="en">Contact</span></a>
+      <a href="#kontakt" class="btn" onclick="closeMenu()"><span class="de">Termin buchen</span><span class="en">Book now</span></a>
+    </div>
+    <div class="ctrls">
+      <div class="toggle" title="Sprache / Language">
+        <button id="de-b" class="on" onclick="setLang('de')">DE</button>
+        <button id="en-b" onclick="setLang('en')">EN</button>
+      </div>
+      <button class="themebtn" id="themebtn" onclick="toggleTheme()" title="Theme">☀</button>
+      <button class="burger" id="burger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="orb a"></div><div class="orb b"></div>
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow"><span class="de">Lippen · Botox · Ästhetische Medizin · Basel</span><span class="en">Lips · Botox · Aesthetic Medicine · Basel</span></div>
+      <h1><span class="de">Natürliche Schönheit,<br>medizinische <em>Präzision</em></span><span class="en">Natural beauty,<br>medical <em>precision</em></span></h1>
+      <p class="sub"><span class="de">Sanfte Lippenunterspritzung, Faltenbehandlung und Aesthetic-Treatments – ärztlich begleitet, mit einem Ergebnis, das nach Ihnen aussieht. Nur natürlicher.</span><span class="en">Gentle lip enhancement, wrinkle treatment and aesthetic treatments – medically supervised, with a result that looks like you. Only more radiant.</span></p>
+      <div class="cta">
+        <a href="#kontakt" class="btn"><span class="de">Kostenlose Beratung</span><span class="en">Free consultation</span></a>
+        <a href="#behandlungen" class="btn ghost"><span class="de">Behandlungen ansehen</span><span class="en">View treatments</span></a>
+      </div>
+      <div class="rating">★★★★★ &nbsp;<b>5.0</b> &nbsp;·&nbsp; <span class="de">Über 15'000 auf Instagram</span><span class="en">Over 15,000 on Instagram</span> &nbsp;·&nbsp; Basel & Biel</div>
+    </div>
+    <div class="hero-art">
+      <svg viewBox="0 0 300 340" xmlns="http://www.w3.org/2000/svg" stroke="var(--gold)" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M92 40c-14 20-20 46-18 78 2 30-6 40-14 54-6 10-2 18 10 20 4 40 34 66 74 66 44 0 74-34 76-84 3-64-12-118-46-140-30-20-64-20-82 6z" opacity=".85"/>
+        <path d="M150 150c-10 0-18 4-24 8 8 6 16 9 24 9s16-3 24-9c-6-4-14-8-24-8z"/>
+        <path d="M126 158c8 4 16 6 24 6s16-2 24-6"/>
+        <path d="M150 150c0-5 3-9 8-11M150 150c0-5-3-9-8-11"/>
+        <circle cx="112" cy="120" r="3" fill="var(--gold)" stroke="none"/>
+        <path d="M96 108c8-6 20-6 28 0"/>
+        <path d="M176 108c8-6 20-6 28 0"/>
+        <path d="M210 60c14 6 26 22 26 22s-14 8-28 4M232 96c10 8 14 22 14 22s-16 2-26-6"/>
+        <g opacity=".6"><path d="M60 250c6-8 6-18 0-26M74 258c8-10 8-22 0-32"/></g>
+      </svg>
+      <div class="tagpill"><span class="de">Natürlichkeit & Sicherheit</span><span class="en">Naturalness & Safety</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- TRUST -->
+<div class="trust"><div class="wrap">
+  <div class="ti"><div class="n">15k+</div><div class="l"><span class="de">Community</span><span class="en">Community</span></div></div>
+  <div class="ti"><div class="n">2</div><div class="l"><span class="de">Standorte</span><span class="en">Locations</span></div></div>
+  <div class="ti"><div class="n">100%</div><div class="l"><span class="de">Ärztlich begleitet</span><span class="en">Medically supervised</span></div></div>
+  <div class="ti"><div class="n">5.0★</div><div class="l"><span class="de">Bewertung</span><span class="en">Rating</span></div></div>
+</div></div>
+
+<!-- BEHANDLUNGEN -->
+<section class="block" id="behandlungen">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow"><span class="de">Behandlungen</span><span class="en">Treatments</span></div>
+      <h2><span class="de">Für Ihre <em>natürliche</em> Ausstrahlung</span><span class="en">For your <em>natural</em> radiance</span></h2>
+      <p><span class="de">Jede Behandlung beginnt mit einem Gespräch und einem individuellen Plan – für ein Ergebnis, das harmonisch zu Ihren Zügen passt.</span><span class="en">Every treatment starts with a conversation and an individual plan – for a result that harmonises with your features.</span></p>
+    </div>
+    <div class="cards">
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 8c-3-3-8-1-8 3 0 3 5 7 8 9 3-2 8-6 8-9 0-4-5-6-8-3z"/></svg></div><h3><span class="de">Lippenunterspritzung</span><span class="en">Lip Filler</span></h3><p><span class="de">Mehr Volumen, definierte Kontur oder einfach ein frischerer Look – dezent und natürlich mit Hyaluronsäure.</span><span class="en">More volume, defined contour or simply a fresher look – subtle and natural with hyaluronic acid.</span></p><div class="price"><span class="de">ab CHF 290</span><span class="en">from CHF 290</span></div></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 12h6l2-4 3 8 2-4h3"/></svg></div><h3><span class="de">Lip Flip & Booster</span><span class="en">Lip Flip & Booster</span></h3><p><span class="de">Ein sanft geschwungener Lippenrand ganz ohne zusätzliches Volumen – der subtile Frische-Effekt.</span><span class="en">A softly curved lip line without added volume – the subtle fresh-up effect.</span></p><div class="price"><span class="de">ab CHF 180</span><span class="en">from CHF 180</span></div></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l3 3M15 15l3 3M18 6l-3 3M9 15l-3 3"/></svg></div><h3><span class="de">Faltenbehandlung</span><span class="en">Wrinkle Treatment</span></h3><p><span class="de">Botulinumtoxin gegen Stirn-, Zornes- und Lachfalten. Mimik bleibt, die Falte geht.</span><span class="en">Botulinum toxin for forehead, frown and smile lines. Your expression stays, the wrinkle goes.</span></p><div class="price"><span class="de">ab CHF 250</span><span class="en">from CHF 250</span></div></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/></svg></div><h3><span class="de">Hyaluron & Skinbooster</span><span class="en">Hyaluron & Skinbooster</span></h3><p><span class="de">Tiefenfeuchtigkeit und strahlende Haut – für einen gesunden, aufgepolsterten Teint.</span><span class="en">Deep hydration and glowing skin – for a healthy, plumped complexion.</span></p><div class="price"><span class="de">auf Anfrage</span><span class="en">on request</span></div></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="2.5"/></svg></div><h3><span class="de">Augenringe & Tränenrinne</span><span class="en">Dark Circles & Tear Trough</span></h3><p><span class="de">Frischer, wacher Blick durch gezielte Unterspritzung der Augenpartie.</span><span class="en">A fresher, more awake look through targeted treatment of the eye area.</span></p><div class="price"><span class="de">auf Anfrage</span><span class="en">on request</span></div></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M9 3h6v4l-2 2v6a3 3 0 0 1-6 0M9 3v4l2 2"/></svg></div><h3><span class="de">Infusionstherapien</span><span class="en">Infusion Therapies</span></h3><p><span class="de">Vitamin- und Aufbau-Infusionen für Wohlbefinden, Energie und ein strahlendes Hautbild.</span><span class="en">Vitamin and revitalising infusions for wellbeing, energy and radiant skin.</span></p><div class="price"><span class="de">auf Anfrage</span><span class="en">on request</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="block alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow"><span class="de">Warum Lippenbasel</span><span class="en">Why Lippenbasel</span></div>
+      <h2><span class="de">Ihre Sicherheit, <em>unsere</em> Priorität</span><span class="en">Your safety, <em>our</em> priority</span></h2>
+    </div>
+    <div class="why">
+      <div class="w"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9-9c-1.5-3.5 1-7 4.5-6.5C10 6 12 8 12 8s2-2 4.5-2.5C20 5 22.5 8.5 21 12c-2 4.5-9 9-9 9z"/></svg></div><h3><span class="de">Natürliche Resultate</span><span class="en">Natural Results</span></h3><p><span class="de">Kein „gemacht“-Look. Wir arbeiten dezent, harmonisch und immer im Einklang mit Ihren Zügen.</span><span class="en">No overdone look. We work subtly, in harmony with your features.</span></p></div>
+      <div class="w"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3 7-7 9-4-2-7-4-7-9V6z"/><path d="M9.5 12l2 2 3.5-4"/></svg></div><h3><span class="de">Ärztlich begleitet</span><span class="en">Medically Supervised</span></h3><p><span class="de">In Zusammenarbeit mit der Klinik Piano – nach medizinischen Standards und mit ärztlicher Kontrolle.</span><span class="en">In cooperation with Klinik Piano – to medical standards and under medical supervision.</span></p></div>
+      <div class="w"><div class="ic"><svg viewBox="0 0 24 24"><path d="M8 3v5l-3 9a3 3 0 0 0 3 4h8a3 3 0 0 0 3-4l-3-9V3M8 3h8M7 13h10"/></svg></div><h3><span class="de">Höchste Hygiene</span><span class="en">Highest Hygiene</span></h3><p><span class="de">Sterile Materialien, geprüfte Produkte und ein klarer, sicherer Ablauf bei jeder Behandlung.</span><span class="en">Sterile materials, certified products and a clear, safe process for every treatment.</span></p></div>
+      <div class="w"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M12 15v6M9 21h6M12 3v1M5 6l1 1M19 6l-1 1"/></svg></div><h3><span class="de">Erfahrung & Vertrauen</span><span class="en">Experience & Trust</span></h3><p><span class="de">Über 15'000 Menschen folgen unserer Arbeit. Vertrauen, das man an jedem Ergebnis sieht.</span><span class="en">Over 15,000 people follow our work. Trust you can see in every result.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNATURE FEATURE -->
+<section class="block">
+  <div class="wrap">
+    <div class="feature">
+      <div class="art">
+        <svg viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" stroke="var(--gold)" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M120 78c-16-14-42-8-42 12 0 16 26 34 42 44 16-10 42-28 42-44 0-20-26-26-42-12z" opacity=".9"/>
+          <path d="M120 90c-8 0-15 3-20 7 6 5 13 8 20 8s14-3 20-8c-5-4-12-7-20-7z"/>
+          <path d="M100 97c6 3 13 5 20 5s14-2 20-5"/>
+          <path d="M120 40v-14M120 26l-6 6M120 26l6 6" opacity=".7"/>
+          <circle cx="170" cy="60" r="2.5" fill="var(--gold)" stroke="none"/>
+          <circle cx="66" cy="70" r="2" fill="var(--gold)" stroke="none"/>
+        </svg>
+      </div>
+      <div class="txt">
+        <div class="eyebrow"><span class="de">Signature</span><span class="en">Signature</span></div>
+        <h2><span class="de">Der <em>Bacio Lip Booster</em></span><span class="en">The <em>Bacio Lip Booster</em></span></h2>
+        <p><span class="de">Unsere Signature-Behandlung für volle, natürlich wirkende Lippen – sanft aufgebaut, individuell auf Ihre Gesichtsform abgestimmt.</span><span class="en">Our signature treatment for full, natural-looking lips – gently built up and individually matched to your face.</span></p>
+        <ul>
+          <li><span class="de">Persönliche Analyse Ihrer Lippen- und Gesichtsproportionen</span><span class="en">Personal analysis of your lip and facial proportions</span></li>
+          <li><span class="de">Hochwertige Hyaluronsäure, schonend appliziert</span><span class="en">Premium hyaluronic acid, gently applied</span></li>
+          <li><span class="de">Natürliches Ergebnis – sichtbar, aber nie übertrieben</span><span class="en">Natural result – visible, but never overdone</span></li>
+          <li><span class="de">Kontrolltermin & Nachsorge inklusive</span><span class="en">Follow-up appointment & aftercare included</span></li>
+        </ul>
+        <a href="#kontakt" class="btn"><span class="de">Beratung anfragen</span><span class="en">Request a consultation</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABLAUF -->
+<section class="block alt" id="ablauf">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow"><span class="de">Ihr Ablauf</span><span class="en">The Process</span></div>
+      <h2><span class="de">Sicher, ehrlich, <em>persönlich</em></span><span class="en">Safe, honest, <em>personal</em></span></h2>
+      <p><span class="de">Ästhetische Medizin ist Vertrauenssache. Deshalb nehmen wir uns Zeit – und sagen auch ehrlich, wenn weniger mehr ist.</span><span class="en">Aesthetic medicine is a matter of trust. That's why we take our time – and honestly say when less is more.</span></p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="no">01</div><h3><span class="de">Beratung</span><span class="en">Consultation</span></h3><p><span class="de">Wir hören zu, analysieren Ihre Wünsche und beraten Sie ehrlich – kostenlos und unverbindlich.</span><span class="en">We listen, analyse your wishes and advise you honestly – free and without obligation.</span></p></div>
+      <div class="step"><div class="no">02</div><h3><span class="de">Behandlung</span><span class="en">Treatment</span></h3><p><span class="de">Präzise, hygienisch und schonend – mit hochwertigen Produkten und ärztlicher Begleitung.</span><span class="en">Precise, hygienic and gentle – with premium products and medical supervision.</span></p></div>
+      <div class="step"><div class="no">03</div><h3><span class="de">Nachsorge</span><span class="en">Aftercare</span></h3><p><span class="de">Klare Empfehlungen und ein Kontrolltermin – damit Sie sich rundum sicher fühlen.</span><span class="en">Clear recommendations and a follow-up – so you feel completely reassured.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTATE -->
+<section class="block" id="resultate">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow"><span class="de">Resultate</span><span class="en">Results</span></div>
+      <h2><span class="de">Vorher · <em>Nachher</em></span><span class="en">Before · <em>After</em></span></h2>
+      <p><span class="de">Echte Ergebnisse sagen mehr als Worte. Hier finden Ihre schönsten Vorher-Nachher-Bilder ihren Platz.</span><span class="en">Real results say more than words. Your finest before-and-after images will live here.</span></p>
+    </div>
+    <div class="gal" id="galgrid"></div>
+  </div>
+</section>
+
+<!-- PREISE -->
+<section class="block alt" id="preise">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow"><span class="de">Preise</span><span class="en">Prices</span></div>
+      <h2><span class="de">Transparent & <em>fair</em></span><span class="en">Transparent & <em>fair</em></span></h2>
+      <p><span class="de">Richtwerte für die beliebtesten Behandlungen. Den genauen Preis besprechen wir individuell in der kostenlosen Beratung.</span><span class="en">Guide prices for the most popular treatments. We discuss your exact price individually in the free consultation.</span></p>
+    </div>
+    <div class="pricecols">
+      <div class="plist">
+        <h3><span class="de">Lippen & Volumen</span><span class="en">Lips & Volume</span></h3>
+        <div class="prow"><div class="nm">Bacio Lip Booster <small><span class="de">Signature Lippenaufbau</span><span class="en">Signature lip enhancement</span></small></div><div class="pr">CHF 390</div></div>
+        <div class="prow"><div class="nm"><span class="de">Lippenunterspritzung</span><span class="en">Lip filler</span> <small><span class="de">1 ml Hyaluron</span><span class="en">1 ml hyaluron</span></small></div><div class="pr"><span class="de">ab</span><span class="en">from</span> 290</div></div>
+        <div class="prow"><div class="nm">Lip Flip <small><span class="de">Botulinumtoxin</span><span class="en">Botulinum toxin</span></small></div><div class="pr">CHF 180</div></div>
+        <div class="prow"><div class="nm"><span class="de">Auffrischung</span><span class="en">Refresh</span> <small><span class="de">0.5 ml</span><span class="en">0.5 ml</span></small></div><div class="pr"><span class="de">ab</span><span class="en">from</span> 190</div></div>
+      </div>
+      <div class="plist">
+        <h3><span class="de">Gesicht & Haut</span><span class="en">Face & Skin</span></h3>
+        <div class="prow"><div class="nm"><span class="de">Faltenbehandlung</span><span class="en">Wrinkle treatment</span> <small><span class="de">pro Zone</span><span class="en">per area</span></small></div><div class="pr"><span class="de">ab</span><span class="en">from</span> 250</div></div>
+        <div class="prow"><div class="nm">Skinbooster <small><span class="de">Tiefenfeuchtigkeit</span><span class="en">Deep hydration</span></small></div><div class="pr"><span class="de">ab</span><span class="en">from</span> 320</div></div>
+        <div class="prow"><div class="nm"><span class="de">Tränenrinne</span><span class="en">Tear trough</span> <small><span class="de">Augenringe</span><span class="en">dark circles</span></small></div><div class="pr"><span class="de">ab</span><span class="en">from</span> 350</div></div>
+        <div class="prow"><div class="nm"><span class="de">Beratung</span><span class="en">Consultation</span> <small><span class="de">unverbindlich</span><span class="en">no obligation</span></small></div><div class="pr gold"><span class="de">kostenlos</span><span class="en">free</span></div></div>
+      </div>
+    </div>
+    <p class="pnote"><span class="de">Alle Preise in CHF, Richtwerte inkl. Beratung. Individuelle Angebote nach persönlichem Gespräch.</span><span class="en">All prices in CHF, guide values incl. consultation. Individual quotes after a personal conversation.</span></p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="block">
+  <div class="wrap">
+    <div class="about">
+      <div class="txt">
+        <div class="eyebrow"><span class="de">Über Lippenbasel</span><span class="en">About Lippenbasel</span></div>
+        <h2><span class="de">Ästhetik mit <em>medizinischem</em> Anspruch</span><span class="en">Aesthetics with a <em>medical</em> standard</span></h2>
+        <p><span class="de">Lippenbasel steht für natürliche Ergebnisse und höchste Sicherheit. Unser Fokus liegt auf sanfter, harmonischer Ästhetik – nichts Übertriebenes, sondern die beste Version von Ihnen.</span><span class="en">Lippenbasel stands for natural results and the highest safety. Our focus is gentle, harmonious aesthetics – nothing overdone, just the best version of you.</span></p>
+        <p><span class="de">In Zusammenarbeit mit der Klinik Piano behandeln wir nach medizinischen Standards, mit hochwertigen Produkten und ärztlicher Begleitung. Schweizer Qualität, in der Sie sich aufgehoben fühlen.</span><span class="en">In cooperation with Klinik Piano we treat to medical standards, with premium products and medical supervision. Swiss quality you can feel safe in.</span></p>
+        <div class="sig"><span class="de">Natürlichkeit & Sicherheit</span><span class="en">Naturalness & Safety</span></div>
+      </div>
+      <div class="visual"><div class="mono2">LB</div><div class="cap">Lippenbasel · Basel</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ACADEMY -->
+<section class="block alt" id="schulung">
+  <div class="wrap">
+    <div class="academy">
+      <div class="orb a" style="opacity:.3"></div>
+      <div class="eyebrow" style="position:relative">Lippenbasel Academy</div>
+      <h2><span class="de">Werde <em>Expertin</em> für ästhetische Behandlungen</span><span class="en">Become an <em>expert</em> in aesthetic treatments</span></h2>
+      <p><span class="de">Praxisnahe Schulungen für Fachpersonen – vom sicheren Umgang mit Hyaluron und Botulinumtoxin bis zur perfekten Lippentechnik. Kleine Gruppen, echte Modelle, Zertifikat.</span><span class="en">Hands-on training for professionals – from the safe use of hyaluron and botulinum toxin to perfect lip technique. Small groups, real models, certificate.</span></p>
+      <div class="tags"><span><span class="de">Lippen-Technik</span><span class="en">Lip technique</span></span><span>Botulinumtoxin</span><span>Hyaluron</span><span><span class="de">Hygiene & Sicherheit</span><span class="en">Hygiene & safety</span></span><span>Zertifikat</span></div>
+      <a href="#kontakt" class="btn"><span class="de">Zur Schulung anfragen</span><span class="en">Enquire about the academy</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="block">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow"><span class="de">Bewertungen</span><span class="en">Reviews</span></div>
+      <h2><span class="de">Was Kundinnen <em>sagen</em></span><span class="en">What clients <em>say</em></span></h2>
+      <p><span class="de">Beispiel-Stimmen – hier erscheinen später Ihre echten Google- und Kundenbewertungen.</span><span class="en">Sample quotes – your real Google and client reviews will appear here later.</span></p>
+    </div>
+    <div class="revs">
+      <div class="rev"><div class="stars">★★★★★</div><p><span class="de">„Endlich ein natürliches Ergebnis – genau so, wie ich es mir gewünscht habe. Ich fühle mich rundum wohl.“</span><span class="en">"Finally a natural result – exactly as I'd hoped. I feel completely comfortable."</span></p><div class="who">— <span class="de">Kundin, Basel</span><span class="en">Client, Basel</span></div></div>
+      <div class="rev"><div class="stars">★★★★★</div><p><span class="de">„Super einfühlsame Beratung und ein Ergebnis, das man kaum als 'gemacht' erkennt. Absolute Empfehlung.“</span><span class="en">"Wonderfully caring consultation and a result you'd barely recognise as 'done'. Highly recommend."</span></p><div class="who">— <span class="de">Kundin, Biel</span><span class="en">Client, Biel</span></div></div>
+      <div class="rev"><div class="stars">★★★★★</div><p><span class="de">„Professionell, hygienisch und ehrlich. Man merkt sofort den medizinischen Hintergrund.“</span><span class="en">"Professional, hygienic and honest. You immediately notice the medical background."</span></p><div class="who">— <span class="de">Kundin, Basel</span><span class="en">Client, Basel</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="block alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow"><span class="de">Häufige Fragen</span><span class="en">FAQ</span></div>
+      <h2><span class="de">Gut zu <em>wissen</em></span><span class="en">Good to <em>know</em></span></h2>
+    </div>
+    <div class="faq">
+      <div class="qa"><button onclick="toggleQa(this)"><span class="de">Tut eine Lippenunterspritzung weh?</span><span class="en">Does a lip treatment hurt?</span></button><div class="a"><p><span class="de">Die Behandlung ist dank feiner Nadeln und betäubender Creme sehr gut verträglich. Die meisten Kundinnen beschreiben es als leichtes Zwicken.</span><span class="en">Thanks to fine needles and numbing cream the treatment is very tolerable. Most clients describe it as a light pinch.</span></p></div></div>
+      <div class="qa"><button onclick="toggleQa(this)"><span class="de">Wie lange hält das Ergebnis?</span><span class="en">How long does the result last?</span></button><div class="a"><p><span class="de">Je nach Behandlung und Stoffwechsel hält Hyaluron in den Lippen meist 6–12 Monate. Bei der Beratung besprechen wir Ihren Verlauf.</span><span class="en">Depending on treatment and metabolism, hyaluron in the lips usually lasts 6–12 months. We discuss your case in the consultation.</span></p></div></div>
+      <div class="qa"><button onclick="toggleQa(this)"><span class="de">Sieht man, dass etwas gemacht wurde?</span><span class="en">Will it look 'done'?</span></button><div class="a"><p><span class="de">Unser Anspruch ist ein natürliches Ergebnis. Wir arbeiten dezent und harmonisch – damit Sie frischer aussehen, nicht „behandelt“.</span><span class="en">Our aim is a natural result. We work subtly and harmoniously – so you look fresher, not "treated".</span></p></div></div>
+      <div class="qa"><button onclick="toggleQa(this)"><span class="de">Ist die Behandlung sicher?</span><span class="en">Is the treatment safe?</span></button><div class="a"><p><span class="de">Ja. Wir arbeiten in Zusammenarbeit mit der Klinik Piano nach medizinischen Standards, mit hochwertigen, zugelassenen Produkten und ärztlicher Begleitung.</span><span class="en">Yes. We work in cooperation with Klinik Piano to medical standards, with premium, approved products and medical supervision.</span></p></div></div>
+      <div class="qa"><button onclick="toggleQa(this)"><span class="de">Wie vereinbare ich einen Termin?</span><span class="en">How do I book an appointment?</span></button><div class="a"><p><span class="de">Am einfachsten über den Button „Termin buchen“ oder per WhatsApp. Die Erstberatung ist kostenlos und unverbindlich.</span><span class="en">Easiest via the "Book now" button or WhatsApp. The first consultation is free and without obligation.</span></p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATIONS -->
+<section class="block" id="kontakt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow"><span class="de">Standorte</span><span class="en">Locations</span></div>
+      <h2><span class="de">Besuchen Sie <em>uns</em></span><span class="en">Come <em>visit us</em></span></h2>
+    </div>
+    <div class="locs">
+      <div class="loc"><div class="tag"><span class="de">Standort 1</span><span class="en">Location 1</span></div><h3>Basel</h3><p>Kleinhüningerstrasse 181<br>4057 Basel</p><p><span class="de">Mo–Fr nach Vereinbarung</span><span class="en">Mon–Fri by appointment</span></p><a href="#"><span class="de">Auf Karte ansehen</span><span class="en">View on map</span> →</a></div>
+      <div class="loc"><div class="tag"><span class="de">Standort 2</span><span class="en">Location 2</span></div><h3>Biel / Bienne</h3><p>Gottstattstrasse<br>2503 Biel</p><p><span class="de">Termine nach Vereinbarung</span><span class="en">Appointments on request</span></p><a href="#"><span class="de">Auf Karte ansehen</span><span class="en">View on map</span> →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="final">
+  <div class="orb a"></div><div class="orb b"></div>
+  <div class="wrap">
+    <div class="eyebrow" style="position:relative"><span class="de">Bereit für Ihren Termin?</span><span class="en">Ready for your appointment?</span></div>
+    <h2><span class="de">Ihre <em>kostenlose</em> Beratung</span><span class="en">Your <em>free</em> consultation</span></h2>
+    <p><span class="de">Erzählen Sie uns von Ihren Wünschen – wir beraten Sie ehrlich und unverbindlich. Für ein Ergebnis, das sich richtig anfühlt.</span><span class="en">Tell us about your wishes – we advise you honestly and without obligation. For a result that feels right.</span></p>
+    <div class="cta" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative">
+      <a href="#" class="btn"><span class="de">Termin buchen</span><span class="en">Book now</span></a>
+      <a href="#" class="btn ghost"><span class="de">WhatsApp schreiben</span><span class="en">Message on WhatsApp</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot">
+    <div>
+      <div class="logo"><span class="mono">LB</span><span class="lt">Lippenbasel<small><span class="de">Ästhetische Medizin</span><span class="en">Aesthetic Medicine</span></small></span></div>
+      <p class="desc"><span class="de">Natürliche ästhetische Medizin in Basel & Biel. Sanfte Lippen, Faltenbehandlung und Aesthetic-Treatments – ärztlich begleitet, in Schweizer Qualität.</span><span class="en">Natural aesthetic medicine in Basel & Biel. Gentle lips, wrinkle treatment and aesthetic treatments – medically supervised, in Swiss quality.</span></p>
+    </div>
+    <div><h4><span class="de">Behandlungen</span><span class="en">Treatments</span></h4><ul>
+      <li><a href="#behandlungen"><span class="de">Lippenunterspritzung</span><span class="en">Lip filler</span></a></li>
+      <li><a href="#behandlungen">Lip Flip & Booster</a></li>
+      <li><a href="#behandlungen"><span class="de">Faltenbehandlung</span><span class="en">Wrinkle treatment</span></a></li>
+      <li><a href="#preise"><span class="de">Preise</span><span class="en">Prices</span></a></li>
+      <li><a href="#schulung">Academy</a></li>
+    </ul></div>
+    <div><h4><span class="de">Kontakt</span><span class="en">Contact</span></h4><ul>
+      <li><a href="#kontakt">Basel · Kleinhüningerstr. 181</a></li>
+      <li><a href="#kontakt">Biel · Gottstattstrasse</a></li>
+      <li><a href="#">WhatsApp</a></li>
+      <li><a href="https://instagram.com/lippenbasel">Instagram @lippenbasel</a></li>
+    </ul></div>
+  </div>
+  <div class="copy">
+    <span>© 2026 Lippenbasel · <span class="de">Ästhetische Medizin</span><span class="en">Aesthetic Medicine</span></span>
+    <span><span class="de">In Zusammenarbeit mit Klinik Piano · Schweizer Qualität</span><span class="en">In cooperation with Klinik Piano · Swiss Quality</span></span>
+  </div>
+</footer>
+
+<div class="mbar">
+  <a href="#" class="call">WhatsApp</a>
+  <a href="#kontakt" class="book"><span class="de">Termin buchen</span><span class="en">Book now</span></a>
+</div>
+
+<script>
+  var lipSVG='<svg viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg" stroke="var(--gold)" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M60 40C46 26 20 34 20 48c0 12 26 26 40 34 14-8 40-22 40-34 0-14-26-22-40-8z"/><path d="M60 50c-8 0-15 2-20 5 6 4 13 6 20 6s14-2 20-6c-5-3-12-5-20-5z"/><path d="M40 55c6 3 13 4 20 4s14-1 20-4"/></svg>';
+  var labels=[['Lippen','Lips'],['Lippen','Lips'],['Botox','Botox'],['Lippen','Lips'],['Skinbooster','Skinbooster'],['Lippen','Lips']];
+  var g=document.getElementById('galgrid');
+  labels.forEach(function(l){
+    var d=document.createElement('div');d.className='ba';d.setAttribute('data-l',l[0]);
+    d.innerHTML='<span class="split"></span>'+lipSVG+'<span class="cap"><span class="de">Vorher / Nachher · Ihr Bild</span><span class="en">Before / After · Your photo</span></span>';
+    g.appendChild(d);
+  });
+  function setLang(l){document.documentElement.setAttribute('data-lang',l);document.documentElement.lang=l;document.getElementById('de-b').classList.toggle('on',l==='de');document.getElementById('en-b').classList.toggle('on',l==='en')}
+  function toggleTheme(){var h=document.documentElement;var d=h.classList.contains('dark');h.classList.toggle('dark',!d);h.classList.toggle('light',d);document.getElementById('themebtn').textContent=d?'☾':'☀'}
+  function toggleMenu(){var o=document.getElementById('menu').classList.toggle('open');document.getElementById('burger').classList.toggle('open');document.body.style.overflow=o?'hidden':''}
+  function closeMenu(){document.getElementById('menu').classList.remove('open');document.getElementById('burger').classList.remove('open');document.body.style.overflow=''}
+  function toggleQa(b){b.parentElement.classList.toggle('open')}
+</script>
+</body>
+</html>
